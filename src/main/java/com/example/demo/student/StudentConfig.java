@@ -24,10 +24,31 @@ public class StudentConfig {
            studentRepository.save(new Student(
                    null,
                    "hafida",
-                   "hafida@gmaul.com",
+                   "hafida@gmail.com",
                    LocalDate.of(2000,9,25)
 
            ));
+            studentRepository.save(new Student(
+                    null,
+                    "Mohammed",
+                    "Mohammed@gmail.com",
+                    LocalDate.of(2001,1,23)
+
+            )); studentRepository.save(new Student(
+                    null,
+                    "Bader",
+                    "Bader@gmail.com",
+                    LocalDate.of(2000,9,25)
+
+            ));
+            studentRepository.save(new Student(
+                    null,
+                    "safia",
+                    "safia@gmail.com",
+                    LocalDate.of(2008,4,4)
+
+            ));
+            studentRepository.findAll().forEach(System.out::println);
         };
     }
 
