@@ -18,7 +18,7 @@ public class StudentConfig {
     private final StudentRepository studentRepository;
 
 
-    @Bean
+   // @Bean //il faut l activer si on veut que ces args soient executés et par la suite les students vont se creer
     CommandLineRunner initStudent(){
 
         return args -> {
