@@ -31,6 +31,25 @@ public class StudentRestController {
        }
    }
 
+   @GetMapping("/{email}")
+   public Student getByEmail(@PathVariable(name = "email") String email){
+
+       try {
+           return studentService.getStudentByEmail(email);
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       }
+
+   }
+
+@DeleteMapping("/{id}")
+   public Student deleteStudent(@PathVariable Long id){
+       try {
+           return studentService.deleteStudent(id);
+       } catch (Exception e) {
+           throw new RuntimeException(e);
+       }
+   }
 
 
 }
