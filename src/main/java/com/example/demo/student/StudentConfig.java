@@ -18,21 +18,21 @@ public class StudentConfig {
     private final StudentRepository studentRepository;
 
 
-   // @Bean //il faut l activer si on veut que ces args soient executés et par la suite les students vont se creer
+   //@Bean //il faut l activer si on veut que ces args soient executés et par la suite les students vont se creer
     CommandLineRunner initStudent(){
 
         return args -> {
            studentRepository.save(new Student(
                    null,
-                   "hafida",
-                   "hafida@gmail.com",
+                   "hafidaa",
+                   "hafidaa@gmail.com",
                    LocalDate.of(2000,9,25)
 
            ));
             studentRepository.save(new Student(
                     null,
-                    "Mohammed",
-                    "Mohammed@gmail.com",
+                    "Moohammed",
+                    "Moohammed@gmail.com",
                     LocalDate.of(2001,1,23)
 
             )); studentRepository.save(new Student(
@@ -44,8 +44,8 @@ public class StudentConfig {
             ));
             studentRepository.save(new Student(
                     null,
-                    "safia",
-                    "safia@gmail.com",
+                    "saafia",
+                    "saafia@gmail.com",
                     LocalDate.of(2008,4,4)
 
             ));

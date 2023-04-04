@@ -43,7 +43,7 @@ public class StudentRestController {
    }
 
 @DeleteMapping("/{id}")
-   public Student deleteStudent(@PathVariable Long id){
+   public Student deleteStudent(@PathVariable(name = "id") Long id){
        try {
            return studentService.deleteStudent(id);
        } catch (Exception e) {
