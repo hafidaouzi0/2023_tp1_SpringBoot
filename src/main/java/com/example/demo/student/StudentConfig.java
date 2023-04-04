@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Configuration
@@ -48,8 +49,18 @@ public class StudentConfig {
                     LocalDate.of(2008,4,4)
 
             ));
-            studentRepository.findAll().forEach(System.out::println);
+         //   List<Student> students=studentRepository.findStudentByQuery("sa");
+         //   System.out.println(students);
+
+            //methode de reference new dans java 8
+          //  studentRepository.findAll().forEach(System.out::println);
+           // List<Student> students=studentRepository.findStudentByEmail("hafida@gmail.com");
+         //   System.out.println(students);
+          //  System.out.println(students.get(0));
+
         };
+
+
     }
 
 
