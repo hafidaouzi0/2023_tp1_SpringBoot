@@ -2,6 +2,8 @@ package com.example.demo.student;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +49,11 @@ public class StudentServiceImp implements  StudentService{
     @Override
     public List<Student> getAllStudents() throws Exception {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public Page<Student> getStudentsAsPage(Pageable pageable) throws Exception {
+        return studentRepository.findAll(pageable);
     }
 
     @Override
