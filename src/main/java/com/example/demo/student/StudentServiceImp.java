@@ -3,6 +3,7 @@ package com.example.demo.student;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -63,5 +64,12 @@ public class StudentServiceImp implements  StudentService{
          return  students.get(0);
         else
             throw new RuntimeException("student not found");
+    }
+
+    @Override
+    public Page<Student> getStudentByKeyword(String keyword,Pageable pageable) throws Exception {
+
+
+        return studentRepository.findStudentByNameContainingOrEmailContaining(keyword,keyword,pageable);
     }
 }

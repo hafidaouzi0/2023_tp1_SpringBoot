@@ -24,28 +24,28 @@ public class StudentConfig {
         return args -> {
            studentRepository.save(new Student(
                    null,
-                   "hafidaa",
-                   "hafidaa@gmail.com",
+                   "hafissdsaa",
+                   "hasfidassa@gmail.com",
                    LocalDate.of(2000,9,25)
 
            ));
             studentRepository.save(new Student(
                     null,
-                    "Moohammed",
-                    "Moohammed@gmail.com",
+                    "Moohsssammed",
+                    "Moohassssmmed@gmail.com",
                     LocalDate.of(2001,1,23)
 
             )); studentRepository.save(new Student(
                     null,
-                    "Bader",
-                    "Bader@gmail.com",
+                    "Bsadesssr",
+                    "Badessssr@gmail.com",
                     LocalDate.of(2000,9,25)
 
             ));
             studentRepository.save(new Student(
                     null,
-                    "saafia",
-                    "saafia@gmail.com",
+                    "saafssia",
+                    "saafsssia@gmail.com",
                     LocalDate.of(2008,4,4)
 
             ));

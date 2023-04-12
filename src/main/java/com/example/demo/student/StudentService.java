@@ -2,8 +2,8 @@ package com.example.demo.student;
 
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -19,5 +19,7 @@ public interface StudentService {
     //peageable nous permet de definir le nombre et la taille de la page
     Page<Student> getStudentsAsPage(Pageable pageable) throws Exception;
 Student getStudentByEmail(String email) throws Exception;
+
+Page<Student> getStudentByKeyword(String keyword,Pageable pageable) throws Exception;
 
 }
