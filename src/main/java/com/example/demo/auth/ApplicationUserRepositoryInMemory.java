@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 //cette classe va implmenter notre interface ApplicationUserDao
 //va gerer l'authentification grace aux utilisateur crées dans la memoire
-@Repository
+@Repository("memoryRepo")
 public class ApplicationUserRepositoryInMemory implements  ApplicationUserDao{
 
     private List<ApplicationUserDetails> users;
