@@ -19,7 +19,7 @@ public class userConfig {
     private final AuthorityRepository authorityRepository;
 
 
-    @Bean
+  //  @Bean
     CommandLineRunner init_users(){
 
         return args -> {

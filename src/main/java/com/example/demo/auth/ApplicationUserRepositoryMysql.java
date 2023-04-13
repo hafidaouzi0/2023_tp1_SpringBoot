@@ -40,6 +40,6 @@ public class ApplicationUserRepositoryMysql implements ApplicationUserDao {
                 user.isEnable()
 
         );
-        return null;
+        return applicationUser;
     }
 }
