@@ -51,6 +51,7 @@ public class ApplicationUserRepositoryInMemory implements  ApplicationUserDao{
 
     @Override
     public ApplicationUserDetails getUserByUsername(String username) {
-        return null;
+        return users.stream().filter(user -> user.getUsername().equals(username)).findFirst()
+                .orElseThrow(()->new RuntimeException("user not found"));
     }
 }

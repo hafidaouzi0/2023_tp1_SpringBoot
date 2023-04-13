@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,6 +23,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     //injection de passwordEncoder
     private final PasswordEncoder passwordEncoder;
+    //injection de l'interface
+    private final UserDetailsService userDetailsService;
 
 
     //cette methode permet de gerer les requetes http qui arrivent vers le serveur
@@ -38,7 +42,23 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
               .httpBasic();
     }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //pour s'authentifier il faut passer par ce provider
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
 
+    @Bean
+    DaoAuthenticationProvider daoAuthenticationProvider(){
+
+           DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
+           provider.setPasswordEncoder(passwordEncoder);
+           provider.setUserDetailsService(userDetailsService);
+           return provider;
+    }
+
+
+    /*
     //verifie l'existence des users
     @Override
     @Bean//cet annotation  permet de ne pas generer le mot de passe donnée par spring security mais d'utiliser les credentials qu'on a defini
@@ -60,5 +80,5 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 //ici on indique les users qu'on veut ajouter dans notre base de donnes memoire
                         user,admin
         );
-    }
+    }*/
 }
