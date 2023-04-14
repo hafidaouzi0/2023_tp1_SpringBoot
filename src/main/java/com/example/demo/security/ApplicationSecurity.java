@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,14 +34,18 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
       http
               .csrf().disable()
+              .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//ici on indique qu'on est plus dans une comm stateful , mais on a passé vers stateless
+              .and()
+              .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))//on indique à spring security qu'on utilise jwt,il faut injecter authenticationManager qui fait partie de WebSecurityConfigurerAdapter,c'est un objet qui est là et qu'on peut récupérer grace au methode authenticationManager()
                .authorizeRequests()
-              .antMatchers("index.html").permitAll()
+              .antMatchers("index.html","/login").permitAll()
               .antMatchers(HttpMethod.POST,"/api/v1/**").hasAuthority("student:write")
               .antMatchers("/api/v1/**").hasAnyRole("ADMIN","USER")
               .anyRequest()
-              .authenticated()
-              .and()
-              .httpBasic();
+              .authenticated();
+            //  .and()
+             // .httpBasic();
+        //on va plus s'authentifier par httpBasic , on va s'authentifier par les tokens
     }
 
     @Override
