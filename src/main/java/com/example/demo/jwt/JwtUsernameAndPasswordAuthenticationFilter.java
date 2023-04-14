@@ -66,3 +66,4 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         super.successfulAuthentication(request, response, chain, authResult);
     }
 }
+//commentaire
