@@ -1,9 +1,6 @@
 package com.example.demo.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,12 +19,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class JwtTokenVerifier extends OncePerRequestFilter //permet de crrer une instance par filtre{
+public class JwtTokenVerifier extends OncePerRequestFilter{ //permet de crrer une instance par filtre{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 //on doit verifier si l'utilisateur a envoyé le token
         //pour cela on doit récuperer le header ,car on envoie le token dans le header par un attribut qui s'appelle Authorization
-String authorizationHeader = request.getHeader("Authorization");
+  String authorizationHeader = request.getHeader("Authorization");
 if(authorizationHeader == null || authorizationHeader.isEmpty() || !authorizationHeader.startsWith("Bearer"))
                                               {
           filterChain.doFilter(request,response);   //go to the following filter if the token is not there
@@ -43,17 +40,17 @@ try {
 String token=authorizationHeader.substring(7);//Bearer+espace c'est 7 caractères
     //on verifie l'authenticité du token et on utilise la secret key qu'on a dejà utilisé
     //en recuperant aussi l'objet claimsJwt
-           Jwt<Header,Claims> claimsJwt= Jwts.parserBuilder()
+           Jws<Claims> claimsJws= Jwts.parserBuilder()
             .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes()))
             .build()
-            .parseClaimsJwt(token);
+            .parseClaimsJws(token);
            //mainetenant on commence à recuperer les informations pour savoir est ce que le user a les autorisations pour acceder aux ressources
     //on recupere d'abord le subject qui est le username
-  String username=  claimsJwt.getBody().getSubject();
+  String username=  claimsJws.getBody().getSubject();
   //en récupère les authorisations ,si on teste le token dans le site de jwt on va voir que l'objet authorities est sous forme de tableau d'objets json
     //on le récupère en java
     //c'est un tableau key value , dans java on le récupère sous forme de liste de map
-    List<Map<String,String>> authorities = (List<Map<String, String>>) claimsJwt.getBody().get("authorities");
+    List<Map<String, String>> authorities = (List<Map<String, String>>) claimsJws.getBody().get("authorities");
     //authentication attend objet de type grantedAuthority
     Set<GrantedAuthority> grantedAuthorities=authorities.stream().map(
             authority -> new SimpleGrantedAuthority(authority.get("authority"))//on donne le key:"authority" pour obtenir l value
@@ -66,7 +63,7 @@ String token=authorizationHeader.substring(7);//Bearer+espace c'est 7 caractère
     );
     //on dit à spring d'ajouter cet objet authenticate dans spring context ,comme ca spring va savoir que celuila est le user qui est authentifié
     SecurityContextHolder.getContext().setAuthentication(authentication);
-    //on dit à spring d'ajouter ce filtre
+    //on dit à spring de passer au filtre suivant selon l'ordre qu'on a mis dans la classe de ApplicationSecurity filter chain
     filterChain.doFilter(request,response);
 
 }catch (Exception e){

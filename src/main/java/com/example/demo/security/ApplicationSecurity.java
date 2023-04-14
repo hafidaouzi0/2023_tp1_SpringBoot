@@ -1,5 +1,6 @@
 package com.example.demo.security;
 
+import com.example.demo.jwt.JwtTokenVerifier;
 import com.example.demo.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)//ici on indique qu'on est plus dans une comm stateful , mais on a passé vers stateless
               .and()
               .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager()))//on indique à spring security qu'on utilise jwt,il faut injecter authenticationManager qui fait partie de WebSecurityConfigurerAdapter,c'est un objet qui est là et qu'on peut récupérer grace au methode authenticationManager()
+              .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthenticationFilter.class)//comme ca on lu dit que ce filtre vient après le premier filtre,comme ca on a créé le filterchain
                .authorizeRequests()
               .antMatchers("index.html","/login").permitAll()
               .antMatchers(HttpMethod.POST,"/api/v1/**").hasAuthority("student:write")
