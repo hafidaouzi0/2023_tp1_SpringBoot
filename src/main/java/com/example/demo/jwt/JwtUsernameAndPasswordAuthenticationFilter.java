@@ -55,8 +55,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         String secret = "secret092802secret092802secret092802secret092802";
         String token = Jwts.builder()
-                .setSubject(authResult.getName())
-                .claim("authorities", authResult.getAuthorities())
+                .setSubject(authResult.getName())//on envoie le username qui est ds notre cas le email qu'on va recuperer dans la verification de l'authenticité de user
+                .claim("authorities", authResult.getAuthorities()) //on va recuperer cette objet dans la classe JwtTokenVerifier
                 .setIssuedAt(new Date())
                 .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(2)))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
